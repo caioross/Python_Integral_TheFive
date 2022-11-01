@@ -113,4 +113,4 @@ while jogando:
   elif vezJogador < 0:
         vezJogador = numeroJogadores-1
 print("Fim de Jogo")
-print("{} é o vencedor!".format(winner))
+print("{} é o vencedor!".format(vencedor))
