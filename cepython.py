@@ -9,10 +9,10 @@ def main():
     print('Quantidade de dígito inválida!')
     cep = input('Digite o CEPpara a consulta')
 
-    request = requests.get('https://viacep.com.br/ws/{}/json/'.format(cep))
-    endereco = request.json()
+  request = requests.get('https://viacep.com.br/ws/{}/json/'.format(cep))
+  endereco = request.json()
 
-  if 'erro' not in endereco:
+  if 'erro' not in endereco :
     print('==> CEP ENCONTRADO <==')
     print('CEP: {}'.format(endereco['cep']))
     print('Cidade: {}'.format(endereco['localidade']))
@@ -21,9 +21,10 @@ def main():
   else:
     print('{}: CEP inválido'.format(cep))
 
-  opcao = int(input('Deseja realizar outra consulta?/n Sim/n Sair/n'))
+  opcao = int(input('Deseja realizar outra consulta? \n 1) Sim \n 2) Sair \n'))
   if opcao == 1:
     main()
+
   else:
     print('Até mais!!!')
 
