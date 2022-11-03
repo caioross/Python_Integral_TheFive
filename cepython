@@ -1,0 +1,43 @@
+import requests
+
+def main():
+  print('CEPython')
+
+  cep = input('Digite o CEP para a consulta:')
+
+  while len(cep) != 8:
+    print('Quantidade de dígitos inválida!')
+    cep = input('Digite o CEP para a consulta: ')
+
+  request = requests.get(f'https://viacep.com.br/ws/{cep}/json')
+  endereco = request.json()
+
+  if 'erro' not in endereco:
+    print('==> CEP ENCONTRADO <==')
+    print(f'CEP: {cep}')
+    print(f'Cidade: {endereco["localidade"]}')
+    print(f'Estado: {endereco["uf"]}')
+    print(f'Estado: {endereco["logradouro"]}')
+    print(f'Estado: {endereco["complemento"]}')
+
+  else:
+    print(f'{cep}: CEP inválido.')
+
+  print('-----------------------------')
+  
+
+  def teste():
+    opcao = input('Deseja realizar outra consulta? \n1. Sim\n2. Sair')
+
+    if opcao == '1' or opcao == '2':
+      if int(opcao) == 1:
+        main()
+      else:
+        print('Até mais!!!')
+    else:
+      teste()
+  teste()
+
+
+if __name__ == '__main__':
+  main()
