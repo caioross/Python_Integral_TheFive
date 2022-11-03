@@ -47,4 +47,4 @@ def admin_index():
   return render_template('admin.html')
 
 if __name__ == '__main__':
-  main()
+  print('0.0.0.0')
