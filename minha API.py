@@ -9,8 +9,8 @@ app = Flask(__name__)
 def pagina_inicial():
   return 'Site da malu'
 
-@app.route('index')
-def indexl():
+@app.route('/index/')
+def index():
   return 'lala'
   
 @app.route('/total/')
@@ -19,9 +19,6 @@ def total():
   total_vendas = tabela['Vendas'].sum()
   resposta = {'Total Vendas:': total_vendas}
   return jsonify(resposta)
-  
-if __name__ == '__main__':
-  app.run('0.0.0.0')
 
 @app.route('/media/')
 def media():
@@ -47,4 +44,4 @@ def admin_index():
   return render_template('admin.html')
 
 if __name__ == '__main__':
-  print('0.0.0.0')
+  app.run('0.0.0.0')
