@@ -1,39 +1,41 @@
-import requests
+import pandas as pd
+from flask import Flask, jsonify, render_template
+#app foi escolhido aleatoriamente mas smp usam app
+app = Flask(__name__)
+#é SMP Flask(__name__) qnd usar o flask
 
-def main():
-	print('CEPython')
+@app.route('/')
+def pagina_inicial():
+  return 'oi'
 
-	cep = input('Digite o CEP para a consulta: ')
-	
-	while len(cep) != 8:
-		print('Quantidade de dígitos inválida!')
-		cep = input('Digite o CEP para a consulta: ')
+@app.route('/total/')
+def total():
+  tabela = pd.read_csv('base.csv')
+  total_vendas = tabela['Vendas'].sum()
+  resposta = {'Total Vendas:': total_vendas}
+  return jsonify(resposta)
 
-	request = requests.get('https://viacep.com.br/ws/{}/json/'.format(cep))
-	endereco = request.json()
+@app.route('/media/') 
+def media():
+  tabela = pd.read_csv('base.csv')
+  media_vendas = tabela['Vendas'].mean()
+  resposta = {'Media Vendas:': media_vendas}
+  return jsonify(resposta)
 
-	if 'erro' not in endereco:
-		print('==> CEP ENCONTRADO <==')
-		print('CEP: {}'.format(endereco['cep']))
-		print('Cidade: {}'.format(endereco['localidade']))
-		print(f"Estado: {endereco['uf']}")
-		
-	else:
-		print('{}: CEP inválido.'.format(cep))
+@app.route('/composto/') 
+def composto():
+  tabela = pd.read_csv('base.csv')
+  media_vendas = tabela['Vendas'].mean()
+  total_vendas = tabela['Vendas'].sum()
+  resposta = {'Media Vendas:': media_vendas, 'Total Vendas:': total_vendas}
+  return jsonify(resposta)
 
-	print('---------------------------------')
- 
-	def validacao():
-		opcao = input('Deseja realizar outra consulta ? \n 1. Sim \n 2. Sair \n ')
-		if opcao == "1" or opcao == "2":
-			if int(opcao) == 1:
-				main()
-			else:
-				print('Até mais!!!')
-		else:
-			validacao()
-	validacao()
-
-if __name__ == '__main__':
-	main()
-	#	if opcao.upper() == "SIM" or opcao.upper == "NAO" or opcao.upper() == "NÂO":
+session = "logado"
+@app.route('/admin/') 
+def admin_index():
+  if('logado' not in session):
+    return redirect (url_for('index'))
+  return render_template('index.html')
+  
+if __name__ == "__main__":
+  app.run('0.0.0.0')
