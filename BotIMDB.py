@@ -60,7 +60,7 @@ for page in pages:
               runtimes.append(None)
 
             if container.strong.text is not None:
-              imdb = float(container.strog.text.replace(',', ','))
+              imdb = float(container.strong.text.replace(',', ','))
               imdb_ratings.append(imdb)
 
             else:
