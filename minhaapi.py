@@ -1,7 +1,7 @@
 import pandas as pd
 from flask import Flask, jsonify, render_template
 
-app = Flask (__name__)
+app = Flask(__name__)
 
 @app.route('/')
 def pagina_inicial():
@@ -37,7 +37,7 @@ session = "logado"
 @app.route ('/admin/')
 def admin_index():
   if ('logado' not in session):
-    return redirect(url_('index'))
+    return redirect(url_for('index'))
   return render_template('index.html')
 
 
