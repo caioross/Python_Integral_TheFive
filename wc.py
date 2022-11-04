@@ -15,7 +15,7 @@ runtimes = []
 imdb_ratings = []
 imdb_ratings_standardized = []
 votes = []
-page = 1
+ratings = []
 
 for page in pages:
   response = get("https://www.imdb.com/search/title?genres=sci-fi&" + "start=" + str(page) + "&explore=title_type,genres&ref_=adv_prv", headers=headers)
@@ -28,7 +28,7 @@ for page in pages:
   for container in movie_containers:
     if container.find('div', class_ = 'ratings-metascore') is not None:
       title = container.h3.a.text
-      title.append(title)
+      titles.append(title)
 
       if container.h3.find('span', class_= 'lister-item-year text-muted unbold') is not None:
         year = container.h3.find('span', class_= 'lister-item-year text-muted unbold').text
@@ -37,7 +37,7 @@ for page in pages:
       else:
         years.append(None)
       if container.p.find('span', class_ = 'certificate') is not None:
-        rating = container.p.find('span', class_= 'certifcate').text
+        rating = container.p.find('span', class_= 'certificate').text
         ratings.append(rating)
 
       else:
@@ -65,7 +65,7 @@ for page in pages:
         imdb_ratings.append(None)
 
       if container.find('span', attrs = {'name':'nv'})['data-value'] is not None:
-        vote = int(container.find('span', attrs = {'name':'nv'})['data value'])
+        vote = int(container.find('span', attrs = {'name':'nv'})['data-value'])
         votes.append(vote)
 
       else:
