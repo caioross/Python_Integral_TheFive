@@ -1,7 +1,7 @@
 import pandas as pd
 from flask import Flask, jsonify, render_template
 
-app = Flask (__name__)
+app = Flask(__name__)
 
 @app.route('/')
 def pagina_inicial():
@@ -38,12 +38,12 @@ def composto():
   return jsonify(resposta)
 
 
-  session = 'logado'
-  @app.route('/admin/')
-  def admin_index():
-    if('logado' not in session):
-      return redirect(url_for('index'))
-    return render_template('index.html')
+session = 'logado'
+@app.route('/admin/')
+def admin_index():
+  if ('logado' not in session):
+    return redirect(url_for('index'))
+  return render_template('index.html')
     
 if __name__ == '__main__':
   app.run('0.0.0.0')
