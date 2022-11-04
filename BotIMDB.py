@@ -12,13 +12,14 @@ titles = []
 years = []
 genres = []
 runtimes = []
-imbd_rattings = []
+imbd_ratings = []
 imbd_ratings_standardized = []
 votes = []
 ratings = []
 
 for page in pages:
    response = get('https://www.imdb.com/search/title?genres=sci-fi&' + 'start=' + str(page) + '&explore=title_type,genres&ref_=adv_prv', headers=headers)
+
    sleep(randint(8,15))
    if response.status_code != 200:
        warn('Muito erradinho: {}; Status code: {}').format(requests, response.status_code)
@@ -36,6 +37,7 @@ for page in pages:
         
             else:
               years.append(None)
+
             if container.p.find('span', class_ = 'certificate') is not None:
               rating = container.p.find('span', class_ = 'certificate').text
               ratings.append(rating)
@@ -58,9 +60,9 @@ for page in pages:
               runtimes.append(None)
 
             if container.strong.text is not None:
-              imdb = float(container.strong.text.replace(',', ','))
+              imdb = float(container.strong.text.replace(',', '.'))
               imdb_ratings.append(imdb)
-
+              
             else:
               imdb_ratings.append(None)
 
