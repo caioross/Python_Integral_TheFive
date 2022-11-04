@@ -18,11 +18,11 @@ votes = []
 page = 1
 
 for page in pages:
-  response = get("https://wwww.imdb.com/search/title?genres=terror&" + "start=" + str(page) + "explore=title_type,genres&ref_=adv_prv", headers=headers)
+  response = get("https://www.imdb.com/search/title?genres=sci-fi&" + "start=" + str(page) + "&explore=title_type,genres&ref_=adv_prv", headers=headers)
   sleep(randint(8,15))
   if response.status_code !=200:
     warn('Muito erradinho: {}; Statu code: {}' .format(requests, response.status_code))
-  page_html = BeatifulSoup(response.text, 'html.parser')
+  page_html = BeautifulSoup(response.text, 'html.parser')
 
   movie_containers = page_html.find_all ('div', class_ = 'lister-item mode-advanced')
   for container in movie_containers:
@@ -33,9 +33,6 @@ for page in pages:
       if container.h3.find('span', class_= 'lister-item-year text-muted unbold') is not None:
         year = container.h3.find('span', class_= 'lister-item-year text-muted unbold').text
         years.append(year)
-      
-      sci_fi_df.loc[:, 'ano'] = sci_fi_df['ano'].str[-5:-1]
-
 
       else:
         years.append(None)
@@ -61,7 +58,7 @@ for page in pages:
         runtimes.append(None)
 
       if container.strong.text is not None:
-        imdb = float (container.strong.text.replace(",","."))
+        imdb = float(container.strong.text.replace(",","."))
         imdb_ratings.append(imdb)
 
       else:
@@ -73,7 +70,15 @@ for page in pages:
 
       else:
         votes.append(None)
-
-
-
         
+        sci_fi_df = pd.DataFrame({'Filme': titles,
+                          'ano': years,
+                          'genero': genres,
+                          'tempo': runtimes,
+                          'imdb': imdb_ratings,
+                          'votos': votes}
+                          )
+sci_fi_df.loc[:, 'ano'] = sci_fi_df['ano'].str[-5:-1]
+sci_fi_df['nota_imdb'] = sci_fi_df['imdb'] * 10
+final_df = sci_fi_df.loc[sci_fi_df['ano'] !='Movie']
+final_df.loc[:, 'ano'] = pd.to_numeric(final_df['ano'])
