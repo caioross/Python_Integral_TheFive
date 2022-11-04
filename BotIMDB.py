@@ -1,5 +1,3 @@
-from requests.models import Response
-from pandas.core.resample import get_resampler
 from requests import get
 from bs4 import BeautifulSoup
 from warnings import warn
@@ -40,7 +38,7 @@ for page in pages:
               years.append(None)
             if container.p.find('span', class_ = 'certificate') is not None:
               rating = container.p.find('span', class_ = 'certificate').text
-              ratings.append(raiting)
+              ratings.append(rating)
             
             else:
               ratings.append('')
