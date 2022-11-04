@@ -33,6 +33,9 @@ for page in pages:
       if container.h3.find('span', class_= 'lister-item-year text-muted unbold') is not None:
         year = container.h3.find('span', class_= 'lister-item-year text-muted unbold').text
         years.append(year)
+      
+      sci_fi_df.loc[:, 'ano'] = sci_fi_df['ano'].str[-5:-1]
+
 
       else:
         years.append(None)
