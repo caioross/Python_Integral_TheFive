@@ -32,7 +32,7 @@ for page in pages:
             title = container.h3.a.text
             titles.append(title)
 
-            if container.h3.find('spam', class_= 'lister-item-year text-muted unbold') is not None:
+            if container.h3.find('span', class_= 'lister-item-year text-muted unbold') is not None:
               year = container.h3.find('span', class_= 'lister-item-year text-muted unbold').text
               years.append(year)
         
